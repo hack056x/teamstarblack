@@ -62,6 +62,9 @@ y para compilar la apk debe hacer lo siguiente:
 
 
 
+# AGRADECIMIENTO
+
+Agradezco al master Percia por el curso de ApkIptv con flutter, no sabia que se podia hacer app con flutter tan facil, ese curso me motivo hacer esta app
 
 
-
+creador por @hacker056
