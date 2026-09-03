@@ -33,3 +33,32 @@ flujo tv
 
 paramount plus
 
+
+solo debe agreagr la cuenta en lo siguiente archivo:
+
+deezer_screen
+flujotv_screen
+paramount_screen
+vix_screen
+
+editandolo y colocando la cuenta reales esta lista para ejecutar esta app de la siguiente manera:
+
+1. abre un terminal desde la misma ruta de la caperta
+2. escribe en el terminal flutter pub get y presiona enter
+3. escribe en el terminal flutter run -d chrome y presiona enter
+
+espera que se ejecute en el navegador
+
+y para compilar la apk debe hacer lo siguiente:
+
+1. abre un terminal desde la misma ruta de la caperta
+2. escribe en el terminal flutter clean y presiona enter
+3. escribe en el terminal flutter pub get y presiona enter
+4. escribe en el terminal flutter build apk --release y presiona enter
+5. espera que se compile el apk y listo
+
+
+
+
+
+
