@@ -34,11 +34,14 @@ flujo tv
 paramount plus
 
 
-solo debe agreagr la cuenta en lo siguiente archivo:
+solo debe agreagar la cuenta en lo siguiente archivo:
 
 deezer_screen
+
 flujotv_screen
+
 paramount_screen
+
 vix_screen
 
 editandolo y colocando la cuenta reales esta lista para ejecutar esta app de la siguiente manera:
