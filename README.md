@@ -1,17 +1,35 @@
-# team_starblack
+# Team Starblack
 
-A new Flutter project.
+es un proyecto hecho en flutter para una app de android para obtener cuenta de vix, deezer, flujo, y paramount plus
 
-## Getting Started
+este es el inicio de la app
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+<img width="496" height="599" alt="image" src="https://github.com/user-attachments/assets/153b165f-080f-4197-bd6c-1bf459db086c" />
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+con la siguiente pantalla podemos tira el dado y gana alguna de la siguiente cuenta que vemos en la siguiente pantalla
+
+
+<img width="352" height="610" alt="image" src="https://github.com/user-attachments/assets/1068c63d-91ad-4fbe-ab9f-2804419fd6cb" />
+
+vix+
+
+
+<img width="350" height="614" alt="image" src="https://github.com/user-attachments/assets/ecccf530-b961-4d25-9666-1aad29d96e12" />
+
+deezer
+
+
+
+<img width="345" height="610" alt="image" src="https://github.com/user-attachments/assets/31d472f1-ba57-4814-be8e-159128dec52b" />
+
+flujo tv
+
+
+
+<img width="344" height="608" alt="image" src="https://github.com/user-attachments/assets/eed7bf06-87cd-4ee2-be67-55eddd474b64" />
+
+
+paramount plus
+
