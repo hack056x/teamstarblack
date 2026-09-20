@@ -44,7 +44,9 @@ paramount_screen
 
 vix_screen
 
-editandolo y colocando la cuenta reales esta lista para ejecutar esta app de la siguiente manera:
+editandolo y colocando la url donde estan la cuenta reales esta lista.
+
+para ejecutar esta app de la siguiente manera:
 
 1. abre un terminal desde la misma ruta de la caperta
 2. escribe en el terminal flutter pub get y presiona enter
