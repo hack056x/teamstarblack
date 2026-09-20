@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/dice_game.dart';
 import '../models/account_service.dart';
@@ -11,42 +13,125 @@ class FlujoTvScreen extends StatefulWidget {
 }
 
 class _FlujoTvScreenState extends State<FlujoTvScreen> {
-  final List<String> accounts = [
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-    'usuario : usuario-flujo-aqui\ncontraseña : contraseña-aqui',
-  ];
+  static const String _accountsUrl =
+      'https://raw.githubusercontent.com/hacker056x/cuenta/refs/heads/main/flujo.txt';
+
+  late Future<List<String>> _accountsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _accountsFuture = _fetchAccounts();
+  }
+
+  Future<List<String>> _fetchAccounts() async {
+    final response = await http.get(Uri.parse(_accountsUrl));
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        'Error al cargar las cuentas (código ${response.statusCode})',
+      );
+    }
+
+    final lines = const LineSplitter()
+        .convert(response.body)
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .toList();
+
+    return lines.map((line) {
+      // El formato del archivo es: correo:contraseña
+      final parts = line.split(':');
+      if (parts.length >= 2) {
+        final email = parts[0].trim();
+        final password = parts.sublist(1).join(':').trim();
+        return 'Usuario : $email\ncontraseña : $password';
+      }
+      return line;
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<SharedPreferences>(
-      future: SharedPreferences.getInstance(),
+    return FutureBuilder<List<Object?>>(
+      future: Future.wait([
+        _accountsFuture,
+        SharedPreferences.getInstance(),
+      ]),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: Center(
+              child: CircularProgressIndicator(
+                color: Colors.cyan,
+              ),
+            ),
           );
         }
+
+        if (snapshot.hasError) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Cuentas Flujo Tv'),
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.cyan,
+            ),
+            backgroundColor: Colors.black,
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.error_outline,
+                        color: Colors.redAccent, size: 64),
+                    const SizedBox(height: 16),
+                    Text(
+                      'No se pudieron cargar las cuentas.\n${snapshot.error}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          _accountsFuture = _fetchAccounts();
+                        });
+                      },
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Reintentar'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+
+        final accounts = snapshot.data![0] as List<String>;
+        final prefs = snapshot.data![1] as SharedPreferences;
+
+        if (accounts.isEmpty) {
+          return const Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(
+              child: Text(
+                'No hay cuentas disponibles.',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          );
+        }
+
         final service = AccountService(
           prefix: 'flujo',
           accounts: accounts,
-          prefs: snapshot.data!,
+          prefs: prefs,
         );
+
         return DiceGame(
           service: service,
-          title: 'Cuentas Flujo TV',
+          title: 'Cuentas Flujo Tv',
           subtitle: 'Lanza el dado. Si sacas un 6, ganas una cuenta.',
         );
       },
