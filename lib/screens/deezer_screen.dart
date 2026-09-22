@@ -87,7 +87,7 @@ class _DeezerScreenState extends State<DeezerScreen> {
                         color: Colors.redAccent, size: 64),
                     const SizedBox(height: 16),
                     Text(
-                      'No se pudieron cargar las cuentas.\n${snapshot.error}',
+                      'No se pudieron cargar las cuentas.\nEl Vecino Te Corto El Internet',
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.white),
                     ),
